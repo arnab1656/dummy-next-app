@@ -1,7 +1,12 @@
 import React from "react";
 import dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
+
+// dotenv.config({
+//   path: path.resolve(__dirname, ""),
+// });
 
 async function getData() {
   const res = await fetch(`${process.env.NEXT_HOST_URL}`, {

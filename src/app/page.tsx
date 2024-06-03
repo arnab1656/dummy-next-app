@@ -15,8 +15,6 @@ async function getData() {
 
   const data = await res.json();
 
-  // const data = { message: "Hello hi from the Next App.js" };
-
   if (data) {
     return data;
   } else {

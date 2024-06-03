@@ -9,13 +9,13 @@ dotenv.config();
 // });
 
 async function getData() {
-  // const res = await fetch(`${process.env.NEXT_HOST_URL}`, {
-  //   method: "GET",
-  // });
+  const res = await fetch(`${process.env.NEXT_HOST_URL}/api/hello`, {
+    method: "GET",
+  });
 
-  // const data = await res.json();
+  const data = await res.json();
 
-  const data = { message: "Hello hi from the Next App.js" };
+  // const data = { message: "Hello hi from the Next App.js" };
 
   if (data) {
     return data;

@@ -4,7 +4,7 @@ import { userSchema } from "@/app/lib/userSchema";
 
 const collectionName = process.env.NEXT_ATLAS_COLLECTION;
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const connection = await connectToDatabase();
 
   const { database } = await connectToDatabase();

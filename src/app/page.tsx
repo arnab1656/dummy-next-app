@@ -1,36 +1,83 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import dotenv from "dotenv";
-import path from "path";
+import styled from "styled-components";
+import axios from "axios";
 
-dotenv.config();
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+`;
 
-// dotenv.config({
-//   path: path.resolve(__dirname, ""),
-// });
+const Input = styled.input`
+  padding: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 16px;
+`;
 
-async function getData() {
-  const res = await fetch(`${process.env.NEXT_HOST_URL}/api/hello`, {
-    method: "GET",
-  });
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 800px;
+`;
 
-  const data = await res.json();
+const GridItem = styled.div`
+  background-color: #f7f7f7;
+  border: 1px solid #e1e1e1;
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
 
-  if (data) {
-    return data;
-  } else {
-    throw new Error("Failed to fetch data");
-  }
-}
+const GridPage: React.FC = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [items, setItems] = useState<string[]>([]);
 
-export default async function Home() {
-  const res = await getData();
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleAddItem = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && inputValue.trim() !== "") {
+      try {
+        const response = await axios.post("http://localhost:3000/api/send", {
+          data: inputValue,
+        });
+
+        console.log("Data inserted:", response.data);
+
+        setItems([...items, inputValue]);
+        setInputValue("");
+      } catch (error) {
+        console.error("Error inserting data:", error);
+      }
+    }
+  };
 
   return (
-    <div>
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        Arnab Here from the Dummy NextApp.js and The App is Updated.
-        <p>Data from API: {res.message}</p>
-      </main>
-    </div>
+    <Container>
+      <Input
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleAddItem}
+        placeholder="Enter a email and press Enter"
+      />
+      <Grid>
+        {items.map((item, index) => (
+          <GridItem key={index}>{item}</GridItem>
+        ))}
+      </Grid>
+    </Container>
   );
-}
+};
+
+export default GridPage;

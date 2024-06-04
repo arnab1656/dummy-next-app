@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     const result = await collection.insertOne({ email: body.data });
     console.log("User inserted:", result.insertedId);
 
-    return NextResponse.json({ result: "from the send route" });
+    return NextResponse.json({ result: "from the send route", status: 400 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: error }, { status: 500 });

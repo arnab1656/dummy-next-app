@@ -47,9 +47,12 @@ const GridPage: React.FC = () => {
   const handleAddItem = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       try {
-        const response = await axios.post(`http://localhost:3000/api/send`, {
-          data: inputValue,
-        });
+        const response = await axios.post(
+          `${process.env.NEXT_HOST_URL}api/send`,
+          {
+            data: inputValue,
+          }
+        );
 
         console.log("Data inserted:", response.data);
 

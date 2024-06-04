@@ -16,6 +16,11 @@ export async function POST(request: NextRequest) {
       { error: "Failed to connect to MongoDB" },
       { status: 500 }
     );
+  } else {
+    return NextResponse.json(
+      { error: "connected to MongoDB" },
+      { status: 200 }
+    );
   }
 
   try {

@@ -16,17 +16,21 @@ export async function GET(request: NextRequest) {
       { error: "Failed to connect to MongoDB" },
       { status: 500 }
     );
+  } else {
+    return NextResponse.json({ result: "connect", status: 200 });
   }
 
   try {
     const body = await request.json();
 
-    const collection = database.collection(collectionName!);
+    console.log(body);
 
-    const result = await collection.insertOne({ email: body.data });
-    console.log("User inserted:", result.insertedId);
+    // const collection = database.collection(collectionName!);
 
-    return NextResponse.json({ result: "from the send route", status: 400 });
+    // const result = await collection.insertOne({ email: body.data });
+    // console.log("User inserted:", result.insertedId);
+
+    return NextResponse.json({ result: "from the send route", status: 500 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: error }, { status: 500 });

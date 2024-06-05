@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
     console.log("User inserted:", result.insertedId);
 
     return NextResponse.json({
+      insertedId: result.insertedId,
       data: body.email,
       status: 200,
     });

@@ -25,11 +25,11 @@ export async function POST(request: NextRequest) {
 
     const collection = database.collection(collectionName!);
 
-    const result = await collection.insertOne({ email: "body.data" });
+    const result = await collection.insertOne({ email: body.email });
     console.log("User inserted:", result.insertedId);
 
     return NextResponse.json({
-      result: body,
+      data: body.email,
       status: 200,
     });
   } catch (error) {

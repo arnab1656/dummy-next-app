@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       insertedId: result.insertedId,
-      data: body.email,
       status: 200,
     });
   } catch (error) {

@@ -16,9 +16,10 @@ export async function GET(request: NextRequest) {
       { error: "Failed to connect to MongoDB" },
       { status: 500 }
     );
-  } else {
-    return NextResponse.json({ result: "connect", status: 200 });
   }
+  //  else {
+  //   return NextResponse.json({ result: "connect", status: 200 });
+  // }
 
   try {
     const body = await request.json();
@@ -30,7 +31,10 @@ export async function GET(request: NextRequest) {
     // const result = await collection.insertOne({ email: body.data });
     // console.log("User inserted:", result.insertedId);
 
-    return NextResponse.json({ result: "from the send route", status: 500 });
+    return NextResponse.json({
+      result: "sending the data to the db",
+      status: 200,
+    });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json({ error: error }, { status: 500 });

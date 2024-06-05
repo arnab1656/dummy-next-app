@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Container = styled.div`
   display: flex;
@@ -38,7 +39,8 @@ const GridItem = styled.div`
 const GridPage: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [items, setItems] = useState<string[]>([]);
-  const hostUri: string | null = process.env.NEXT_PUBLIC_BASE_URL || null;
+
+  const { data: session } = useSession();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -62,22 +64,32 @@ const GridPage: React.FC = () => {
     }
   };
 
-  return (
-    <Container>
-      <Input
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={handleAddItem}
-        placeholder="Enter an email and press Enter"
-      />
-      <Grid>
-        {items.map((item, index) => (
-          <GridItem key={index}>{item}</GridItem>
-        ))}
-      </Grid>
-    </Container>
-  );
+  if (session) {
+    return (
+      <Container>
+        <Input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleAddItem}
+          placeholder="Enter an email and press Enter"
+        />
+        <Grid>
+          {items.map((item, index) => (
+            <GridItem key={index}>{item}</GridItem>
+          ))}
+        </Grid>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        Not signed in
+        <br />
+        <button onClick={() => signIn()}>Sign in</button>
+      </Container>
+    );
+  }
 };
 
 export default GridPage;

@@ -26,13 +26,13 @@ export async function POST(request: NextRequest) {
 
     console.log(body);
 
-    // const collection = database.collection(collectionName!);
+    const collection = database.collection(collectionName!);
 
-    // const result = await collection.insertOne({ email: body.data });
-    // console.log("User inserted:", result.insertedId);
+    const result = await collection.insertOne({ email: body.data });
+    console.log("User inserted:", result.insertedId);
 
     return NextResponse.json({
-      result: "sending the data to the db",
+      result: result.insertedId,
       status: 200,
     });
   } catch (error) {

@@ -17,9 +17,6 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-  //  else {
-  //   return NextResponse.json({ result: "connect", status: 200 });
-  // }
 
   try {
     const body = await request.json();
@@ -32,7 +29,7 @@ export async function POST(request: NextRequest) {
     console.log("User inserted:", result.insertedId);
 
     return NextResponse.json({
-      result: result.insertedId,
+      result: body,
       status: 200,
     });
   } catch (error) {
